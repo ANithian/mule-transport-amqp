@@ -112,16 +112,19 @@ public abstract class AmqpEndpointUtil
         if (StringUtils.isBlank(exchangeName))
         {
             // default exchange name -> can not bind a queue to it
-            throw new MuleRuntimeException(
-                MessageFactory.createStaticMessage("No queue can be programmatically bound to the default exchange: "
-                                                   + endpoint));
+//            throw new MuleRuntimeException(
+//                MessageFactory.createStaticMessage("No queue can be programmatically bound to the default exchange: "
+//                                                   + endpoint));
+            LOG.info("Queue declared on default exchange. Don't bind.");
         }
-
-        // bind queue to exchange
-        channel.queueBind(queueName, exchangeName, routingKey);
-
-        LOG.info("Bound queue: " + queueName + " to exchange: " + exchangeName + " with routing key: "
-                 + routingKey);
+        else
+        {
+            // bind queue to exchange
+            channel.queueBind(queueName, exchangeName, routingKey);
+    
+            LOG.info("Bound queue: " + queueName + " to exchange: " + exchangeName + " with routing key: "
+                     + routingKey);
+        }
     }
 
     public static String getOrCreateExchange(final Channel channel,
