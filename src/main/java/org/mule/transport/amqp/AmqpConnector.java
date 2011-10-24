@@ -23,6 +23,7 @@ import org.apache.commons.pool.impl.StackObjectPool;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.MuleMessage;
+import org.mule.api.construct.FlowConstruct;
 import org.mule.api.endpoint.EndpointBuilder;
 import org.mule.api.endpoint.EndpointException;
 import org.mule.api.endpoint.ImmutableEndpoint;
@@ -715,5 +716,17 @@ public class AmqpConnector extends AbstractConnector
     public ConnectionFactory getConnectionFactory()
     {
         return this.connectionFactory;
+    }
+
+    @Override
+    /*
+     * The current implementation will return "" because the endpointURI's getAddress()
+     * returns a blank string.
+     */
+    protected Object getReceiverKey(FlowConstruct flowConstruct,
+            InboundEndpoint endpoint)
+    {
+        // TODO Auto-generated method stub
+        return endpoint.getAddress();
     }
 }
