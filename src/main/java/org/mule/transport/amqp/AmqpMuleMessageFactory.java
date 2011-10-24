@@ -92,8 +92,8 @@ public class AmqpMuleMessageFactory extends AbstractMuleMessageFactory
         putIfNonNull(messageProperties, AmqpConstants.TIMESTAMP, amqpProperties.getTimestamp());
         putIfNonNull(messageProperties, AmqpConstants.TYPE, amqpProperties.getType());
         putIfNonNull(messageProperties, AmqpConstants.USER_ID, amqpProperties.getUserId());
-
-        messageProperties.putAll(amqpProperties.getHeaders());
+	if(amqpProperties.getHeaders() != null)
+        	messageProperties.putAll(amqpProperties.getHeaders());
     }
 
     private void addEnvelopeProperties(final Map<String, Object> messageProperties, final Envelope envelope)
